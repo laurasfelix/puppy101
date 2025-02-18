@@ -2,6 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Geist, Geist_Mono } from "next/font/google";
+import {useState} from 'react';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,6 +16,7 @@ const geistMono = Geist_Mono({
 
 
 export default function Home() {
+  const [message, setMessage] = useState("CLICK THE BUTTONS DUDE");
 
   let audio: HTMLAudioElement | null = null;
 
@@ -22,6 +24,14 @@ export default function Home() {
     if (!audio || audio.paused) {
       audio = new Audio(`/${name}.mp3`);
       audio.play();
+      const messageElement = document.getElementById("messageDisplay");
+    if (messageElement) {
+      messageElement.innerHTML = "Chat started! 🎉";
+    } else {
+      console.error("Element #messageDisplay not found.");
+    }
+
+    setMessage("let's goo! 🎉");
     }
   }
 
@@ -43,6 +53,10 @@ export default function Home() {
         <button onClick={()=>playAudio("howl")} className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-2xl">
             <Link href="/prev"> previous chats  </Link>
         </button>
+
+        <p id="messageDisplay" className="text-lg font-semibold">
+          {message}
+        </p>
 
      </div> 
     </div>
